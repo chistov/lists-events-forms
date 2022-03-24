@@ -1,11 +1,47 @@
 import * as React from 'react'
 
-export class RootComponent extends React.Component {
+interface Props {
+  handleSubmit: (event: React.SyntheticEvent) => void;
+}
 
-  render(): JSX.Element {
+interface State {
+  value: string;
+  shouldUpdate: boolean;
+}
+
+export class RootComponent extends React.Component<Props, State> {
+  constructor(props:Props) {
+    super(props);
+    this.state = {
+      value: '',
+      shouldUpdate: true
+    };
+
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  shouldComponentUpdate() {return this.state.shouldUpdate}
+
+  handleChange(event: React.FormEvent<HTMLInputElement>) {
+    this.setState({value: event.currentTarget.value});
+  }
+
+  render() {
     return (
-      <div>root</div>
-    )
+      <>
+        <div className={'curr-value'}>Вы ввели: {this.state.value}</div>
+        <form onSubmit={this.props.handleSubmit}>
+          <div>Введите что-нибудь: </div>
+          <input
+            id="input"
+            type="text"
+            value={this.state.value}
+            placeholder={'Ввод ...'}
+            onChange={this.handleChange} />
+          <input id="submit" type="submit" value="Submit" />
+        </form>
+      </>
+    );
   }
 }
 
