@@ -1,7 +1,8 @@
 import * as React from 'react'
 
 interface Props {
-  handleSubmit: (event: React.SyntheticEvent) => void;
+  handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+  srvRequest: () => void;
 }
 
 interface State {
@@ -14,7 +15,7 @@ export class RootComponent extends React.Component<Props, State> {
     super(props);
     this.state = {
       value: '',
-      shouldUpdate: true
+      shouldUpdate: true,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -24,6 +25,10 @@ export class RootComponent extends React.Component<Props, State> {
 
   handleChange(event: React.FormEvent<HTMLInputElement>) {
     this.setState({value: event.currentTarget.value});
+  }
+
+  componentDidMount() {
+    this.props.srvRequest();
   }
 
   render() {

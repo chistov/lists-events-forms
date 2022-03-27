@@ -4,14 +4,19 @@ import {RootComponent} from './RootComponent'
 import ChildWithBtn from "./ChildWithBtn";
 
 class App extends React.Component {
-  handleSubmit = (event: React.SyntheticEvent) => {
+  private data:Array<number> = [];
+  handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+  }
+
+  srvRequest() {
+    this.data = [1,2,3];
   }
 
   render() {
     return (
       <div className="example">
-        <RootComponent handleSubmit={this.handleSubmit}>
+        <RootComponent handleSubmit={this.handleSubmit} srvRequest={this.srvRequest}>
         </RootComponent>
         <ChildWithBtn test={1}></ChildWithBtn>
       </div>
