@@ -4,6 +4,7 @@ import {Button} from "./stories/Button";
 interface Props {
   handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
   srvRequest: () => void;
+  unmount: () => void;
 }
 
 interface State {
@@ -35,6 +36,10 @@ export class RootComponent extends React.Component<Props, State> {
 
   componentDidMount() {
     this.props.srvRequest();
+  }
+
+  componentWillUnmount() {
+    this.props.unmount();
   }
 
   render() {
