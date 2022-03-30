@@ -1,4 +1,5 @@
 import * as React from 'react'
+import {Button} from "./stories/Button";
 
 interface Props {
   handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
@@ -19,6 +20,11 @@ export class RootComponent extends React.Component<Props, State> {
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.toggleComponentUpdate = this.toggleComponentUpdate.bind(this);
+  }
+
+  toggleComponentUpdate() {
+    this.setState({shouldUpdate: !this.state.shouldUpdate});
   }
 
   shouldComponentUpdate() {return this.state.shouldUpdate}
@@ -45,6 +51,9 @@ export class RootComponent extends React.Component<Props, State> {
             onChange={this.handleChange} />
           <input id="submit" type="submit" value="Submit" />
         </form>
+        <Button
+          label={this.state.shouldUpdate ? "Disable update" : "Enable update"}
+          onClick={this.toggleComponentUpdate}></Button>
       </>
     );
   }
